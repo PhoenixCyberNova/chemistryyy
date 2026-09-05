@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07090d;
+  --color-surface: #121820;
+  --color-raised: #1a222c;
+  --color-fg: #e9eef4;
+  --color-muted: #8d99a8;
+  --color-primary: #2dd4bf;
+  --color-primary-dim: #0f766e;
+  --color-gold: #e8c36a;
+  --color-border: #2a3646;
+  --color-ok: #34d399;
+  --color-danger: #f87171;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-lg: 1.15rem;
+  --radius-xl: 1.6rem;
+}
+
+html.light {
+  --color-bg: #f3efe6;
+  --color-surface: #fffdf8;
+  --color-raised: #efe6d4;
+  --color-fg: #14202b;
+  --color-muted: #5b6a78;
+  --color-primary: #0f766e;
+  --color-primary-dim: #115e59;
+  --color-gold: #9a6b12;
+  --color-border: #d7ccb8;
+  --color-ok: #047857;
+  --color-danger: #b91c1c;
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-family: var(--font-display);
+  }
+  p {
+    text-wrap: pretty;
+  }
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+html.light .grain {
+  background-image: radial-gradient(rgba(20, 32, 43, 0.05) 0.6px, transparent 0.6px);
+}
+
+.hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='48' viewBox='0 0 84 48'%3E%3Cpath fill='none' stroke='%232dd4bf' stroke-opacity='0.09' stroke-width='1' d='M21 0 L42 12 L42 36 L21 48 L0 36 L0 12 Z M63 0 L84 12 L84 36 L63 48 L42 36 L42 12 Z'/%3E%3C/svg%3E");
+  background-size: 84px 48px;
+}
+
+.eq {
+  font-family: var(--font-mono);
+  font-variant-ligatures: none;
+}
+
+.stagger > * {
+  animation: rise 520ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 40ms; }
+.stagger > *:nth-child(2) { animation-delay: 120ms; }
+.stagger > *:nth-child(3) { animation-delay: 200ms; }
+.stagger > *:nth-child(4) { animation-delay: 280ms; }
+.stagger > *:nth-child(5) { animation-delay: 360ms; }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes sheen {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes flask-glow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+
+.wordmark {
+  background: linear-gradient(100deg, #2dd4bf 0%, #e8c36a 35%, #7dd3fc 70%, #2dd4bf 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 10s linear infinite;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.card-enter {
+  animation: rise 420ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.modal-enter {
+  animation: rise 250ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.orbit-ring {
+  animation: orbit 28s linear infinite;
+  transform-origin: center;
+}
+
+.orbit-ring-rev {
+  animation: orbit 18s linear infinite reverse;
+  transform-origin: center;
+}
+
+.float-slow {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+.lab-glow {
+  animation: flask-glow 4.5s ease-in-out infinite;
+}
+
+.safe-pad {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+@media (max-width: 380px) {
+  .safe-pad {
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

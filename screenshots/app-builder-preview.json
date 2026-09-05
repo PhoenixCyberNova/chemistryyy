@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "ChemVault 10",
+      "hasCanvas": false,
+      "bodyTextLen": 80982,
+      "bodyTextHash": "1d9437a0622497d70e4bc010660ec3664fefdca4305b941a9ada7894ea670657",
+      "bodyTextPrefix": "CBSE · Class 10 · Chemistry ChemVault 10 A complete NCERT revisi",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "ChemVault 10",
+      "hasCanvas": false,
+      "bodyTextLen": 80979,
+      "bodyTextHash": "d703afdfbe666e5269c003f87cb0a185a3686795aed812cffe7ab23547949fe3",
+      "bodyTextPrefix": "CBSE · Class 10 · Chemistry ChemVault 10 A complete NCERT revisi",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
