@@ -493,9 +493,40 @@ export const functionalGroups = [
   { name: "Alkyne", group: "—C≡C—", example: "Ethyne" },
 ];
 
-export const credits = [
-  { name: "Udirn", role: "Creator" },
-  { name: "Ansh", role: "Creator" },
-  { name: "Aryan", role: "Creator" },
-  { name: "Grok AI", role: "Build partner" },
+export type Credit = {
+  name: string;
+  role: string;
+  description: string;
+  tone: "rainbow" | "teal" | "gold" | "sky";
+};
+
+export const credits: Credit[] = [
+  {
+    name: "Udirn",
+    role: "Creator",
+    tone: "rainbow",
+    description:
+      "The architect of it all — he imagined ChemVault 10, shaped every panel of it, and built it end to end with obsessive care.",
+  },
+  {
+    name: "Ansh",
+    role: "Chief Moderator",
+    tone: "teal",
+    description:
+      "The guardian of accuracy — he reviews every explanation with a fine-tooth comb, keeping the content exam-true and trustworthy.",
+  },
+  {
+    name: "Aryan",
+    role: "Research Director",
+    tone: "gold",
+    description:
+      "The investigator — he mined the NCERT lines and years of board papers so every reaction and rule here earns its marks.",
+  },
+  {
+    name: "Grok AI",
+    role: "Build Partner",
+    tone: "sky",
+    description:
+      "The tireless co-engineer — it paired on the code, powered the quiz engine, and keeps the AI tutor answering around the clock.",
+  },
 ];

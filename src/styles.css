@@ -349,6 +349,32 @@ html.light .wordmark {
   color: transparent;
 }
 
+/* Cycling RGB rainbow text (Credits role badge) */
+.rainbow-role {
+  background-image: linear-gradient(
+    90deg,
+    #ff6b81 0%,
+    #ffa502 15%,
+    #ffdd57 30%,
+    #4cd964 45%,
+    #4cc7ff 60%,
+    #9b7bff 75%,
+    #ff6bdc 90%,
+    #ff6b81 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow-pan 5s linear infinite;
+}
+
+@keyframes rainbow-pan {
+  to {
+    background-position: -200% 0;
+  }
+}
+
 /* ---------------------------------- */
 /* Animations                         */
 /* ---------------------------------- */

@@ -16,6 +16,7 @@ import { StudentHydrate } from "@/components/vault/StudentHydrate";
 import { ThemeToggle } from "@/components/vault/ThemeToggle";
 import { chapters, colours, definitions, notes, quizData, reactions } from "@/lib/data/catalogue";
 import { credits, functionalGroups, indicators, pHGuide, series } from "@/lib/data/more";
+import type { Credit } from "@/lib/data/more";
 import type { ChapterId } from "@/lib/data/quiz";
 import {
   bucketsFor,
@@ -39,6 +40,7 @@ import {
   Lightbulb,
   Menu,
   MessageCircle,
+  Megaphone,
   Palette,
   Search,
   Sparkles,
@@ -59,6 +61,20 @@ const SECTION_IDS: Section[] = [
   "revision",
   "ai",
   "credits",
+];
+
+/** Role tone → text class (Udirn's Creator role cycles a full RGB rainbow). */
+const ROLE_TONE_CLASS: Record<Credit["tone"], string> = {
+  rainbow: "rainbow-role",
+  teal: "text-primary",
+  gold: "text-gold",
+  sky: "text-sky",
+};
+
+const EXHIBITS = [
+  { label: "Exhibit A", src: "/credits/he-looks-like-this-1.png" },
+  { label: "Exhibit B", src: "/credits/he-looks-like-this-2.png" },
+  { label: "Exhibit C", src: "/credits/he-looks-like-this-3.png" },
 ];
 
 function scrollToId(id: string) {
@@ -600,19 +616,77 @@ export function VaultApp() {
                   {credits.map((c) => (
                     <li
                       key={c.name}
-                      className="group flex items-center gap-4 rounded-2xl border border-border/70 bg-bg/55 px-5 py-5 transition-colors hover:border-gold/40"
+                      className="group flex flex-col gap-3 rounded-2xl border border-border/70 bg-bg/55 px-5 py-5 transition-colors hover:border-gold/40"
                     >
-                      <span className="grid size-12 shrink-0 place-items-center rounded-2xl border border-gold/30 bg-gold/10">
-                        <Users className="size-5 text-gold" />
-                      </span>
-                      <div className="min-w-0">
-                        <p className="font-display text-2xl text-fg">{c.name}</p>
-                        <p className="text-xs uppercase tracking-[0.16em] text-muted">{c.role}</p>
+                      <div className="flex items-center gap-4">
+                        <span className="grid size-12 shrink-0 place-items-center rounded-2xl border border-gold/30 bg-gold/10">
+                          <Users className="size-5 text-gold" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="font-display text-2xl text-fg">{c.name}</p>
+                          <p
+                            className={cn(
+                              "text-xs font-semibold uppercase tracking-[0.16em]",
+                              ROLE_TONE_CLASS[c.tone],
+                            )}
+                          >
+                            {c.role}
+                          </p>
+                        </div>
                       </div>
+                      <p className="text-sm leading-relaxed text-muted">{c.description}</p>
                     </li>
                   ))}
                 </ul>
               </div>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <aside className="glass relative mt-6 rounded-[1.5rem] border-gold/25 p-7 sm:p-10">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/45 bg-gold/10 px-4 py-1.5 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-gold shadow-[0_0_26px_-6px_rgb(226_194_132_/_0.5)]">
+                  <Megaphone className="size-3.5" />
+                  Public notice
+                </span>
+                <div className="mt-6 space-y-4 text-[0.95rem] leading-relaxed text-fg/90">
+                  <p>
+                    Following a recent internal investigation, we have reason to believe that an individual has
+                    been attempting to claim credit for this website — a claim that is, regrettably, entirely
+                    unfounded. The person in question goes by the name of{" "}
+                    <span className="font-semibold text-danger">Ansh</span>.
+                  </p>
+                  <p>
+                    For the record: he happens to share his name with our distinguished{" "}
+                    <span className="font-semibold text-primary">Chief Moderator</span> above. They are not the
+                    same person.
+                  </p>
+                  <p>Should he be encountered making such claims, he may be identified as follows:</p>
+                </div>
+                <ul className="mt-7 grid gap-4 sm:grid-cols-3">
+                  {EXHIBITS.map((exhibit) => (
+                    <li key={exhibit.label}>
+                      <figure className="group overflow-hidden rounded-2xl border border-border/70 bg-bg/55">
+                        <div className="overflow-hidden">
+                          <img
+                            src={exhibit.src}
+                            alt={`${exhibit.label} — recent sighting, mid-claim`}
+                            loading="lazy"
+                            className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          />
+                        </div>
+                        <figcaption className="flex items-center justify-between gap-2 px-4 py-3">
+                          <span className="font-mono text-xs uppercase tracking-[0.2em] text-gold">
+                            {exhibit.label}
+                          </span>
+                          <span className="text-right text-[0.7rem] leading-tight text-muted">
+                            Recent sighting, mid-claim
+                          </span>
+                        </figcaption>
+                      </figure>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-7 text-right font-display text-lg italic text-gold">— The ChemVault Team</p>
+              </aside>
             </Reveal>
           </section>
         </main>
