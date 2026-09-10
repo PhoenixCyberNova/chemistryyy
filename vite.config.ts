@@ -150,6 +150,8 @@ export default defineConfig(({ command, isPreview }) => ({
     host: "0.0.0.0",
     port: 8080,
     strictPort: true,
+    // Live-preview hosts are dynamic (e2b proxied subdomains) — allow them all.
+    allowedHosts: true,
   },
   preview: {
     host: "127.0.0.1",

@@ -1,26 +1,26 @@
 import { useStudent } from "@/lib/student/store";
-import { Bookmark, FlaskConical, Search, Sparkles } from "lucide-react";
+import { BookMarked, FlaskConical, Search, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const STEPS = [
   {
-    title: "Your Class 10 chemistry lab",
-    body: "Reactions, colours, definitions, exam notes and a full quiz bank — written to NCERT language, not watered down.",
+    title: "Your Class 10 chemistry vault",
+    body: "Reactions, colours, definitions, exam notes and a full quiz bank — written in NCERT language, designed like a premium study instrument.",
     icon: FlaskConical,
   },
   {
     title: "Find anything in a second",
-    body: "Search HCl, hydrochloric acid, or just “acid”. Aliases, formulae, colours and questions all live in one index. Press ⌘K anytime.",
+    body: "Search HCl, hydrochloric acid, or just “acid”. Aliases, formulae, colours and questions all live in one index. Press ⌘K anywhere.",
     icon: Search,
   },
   {
     title: "Mark it. Master it.",
     body: "Toggle Learned or Needs review on every reaction. Stars, definitions and missed questions collect in My Revision.",
-    icon: Bookmark,
+    icon: BookMarked,
   },
   {
     title: "Quiz like the board paper",
-    body: "1-mark MCQs, assertion–reason, case-based, timed mode, exam simulation, retry-wrong and a daily streak. Sign in to sync devices.",
+    body: "1-mark MCQs, assertion–reason, case-based, timed mode, a full exam simulation and an adaptive engine that targets your weakest chapter.",
     icon: Sparkles,
   },
 ];
@@ -36,30 +36,28 @@ export function Onboarding() {
   const Icon = step.icon;
 
   return (
-    <div className="fixed inset-0 z-[70] grid place-items-end bg-bg/70 p-4 backdrop-blur-sm sm:place-items-center">
-      <div className="modal-enter w-full max-w-md rounded-3xl border border-border bg-surface p-6 shadow-[0_30px_60px_rgba(0,0,0,0.35)]">
-        <div className="flex size-11 items-center justify-center rounded-2xl bg-primary/15 text-primary">
-          <Icon className="size-5" />
+    <div className="fixed inset-0 z-[70] grid place-items-end bg-bg/70 p-4 backdrop-blur-md sm:place-items-center">
+      <div className="modal-enter glass w-full max-w-md rounded-[1.5rem] p-6 shadow-[0_40px_90px_-20px_rgb(0_0_0/0.7)] sm:p-7">
+        <div className="grid size-12 place-items-center rounded-2xl border border-primary/30 bg-primary/12">
+          <Icon className="size-5 text-primary" />
         </div>
-        <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
-          {i + 1} / {STEPS.length}
+        <p className="mt-5 text-[0.62rem] font-bold uppercase tracking-[0.24em] text-gold">
+          Step {i + 1} / {STEPS.length}
         </p>
-        <h2 className="mt-2 font-display text-2xl text-fg">{step.title}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
-        <div className="mt-5 flex gap-1.5">
+        <h2 className="mt-2 font-display text-[1.65rem] leading-snug text-fg">{step.title}</h2>
+        <p className="mt-2.5 text-sm leading-relaxed text-muted">{step.body}</p>
+        <div className="mt-6 flex gap-1.5">
           {STEPS.map((_, idx) => (
             <span
               key={idx}
-              className={`h-1.5 flex-1 rounded-full ${idx <= i ? "bg-primary" : "bg-border"}`}
+              className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                idx <= i ? "bg-gradient-to-r from-primary to-gold" : "bg-border"
+              }`}
             />
           ))}
         </div>
-        <div className="mt-5 flex gap-2">
-          <button
-            type="button"
-            onClick={() => finish()}
-            className="h-11 flex-1 rounded-xl border border-border text-sm font-medium text-muted"
-          >
+        <div className="mt-6 flex gap-2">
+          <button type="button" onClick={() => finish()} className="btn btn-ghost h-11 flex-1">
             Skip
           </button>
           <button
@@ -68,9 +66,9 @@ export function Onboarding() {
               if (i + 1 >= STEPS.length) finish();
               else setI((n) => n + 1);
             }}
-            className="h-11 flex-1 rounded-xl bg-primary text-sm font-semibold text-bg"
+            className="btn btn-primary h-11 flex-[1.4]"
           >
-            {i + 1 >= STEPS.length ? "Start studying" : "Next"}
+            {i + 1 >= STEPS.length ? "Enter the vault" : "Continue"}
           </button>
         </div>
       </div>
