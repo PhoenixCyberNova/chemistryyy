@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 export function AuthSlot() {
   const { user, isPending } = useCurrentUserState();
   if (isPending) {
-    return <div className="size-9 shrink-0 animate-pulse rounded-full bg-raised" aria-hidden />;
+    return <div className="size-10 shrink-0 animate-pulse rounded-xl bg-raised" aria-hidden />;
   }
   if (user) {
     return (
@@ -17,7 +17,7 @@ export function AuthSlot() {
   return (
     <Link
       to="/login"
-      className="inline-flex h-11 shrink-0 items-center rounded-xl border border-border px-3 text-sm font-medium text-muted hover:text-fg"
+      className="btn btn-ghost h-10 shrink-0 rounded-xl px-3.5 text-xs"
     >
       Sign in
     </Link>

@@ -10,7 +10,7 @@ export function ThemeToggle() {
       type="button"
       aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
       onClick={() => setTheme(light ? "dark" : "light")}
-      className="relative grid size-11 shrink-0 place-items-center rounded-xl border border-border text-muted transition-[opacity,transform] duration-150 hover:text-fg active:scale-[0.96]"
+      className="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-surface/60 text-muted transition-[color,border-color,transform] duration-200 hover:border-primary/50 hover:text-fg active:scale-90"
     >
       <span className="relative inline-block size-4">
         <Sun
