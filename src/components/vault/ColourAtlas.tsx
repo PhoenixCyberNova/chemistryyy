@@ -57,10 +57,51 @@ function hexToHsl(hex: string): { h: number; s: number; l: number } {
   return { h, s, l };
 }
 
-function familyOf(row: ColourRow): Family {
-  if (/colourless|colorless/i.test(row.colour) && !/white|milky/i.test(row.colour)) return "Clear";
-  if (/colourless|colorless/i.test(row.colour) && /milky/i.test(row.colour)) return "White";
-  const { h, s, l } = hexToHsl(row.swatch);
+/** Classify from the written appearance first — exam colour beats the swatch hex. */
+function familyFromText(colour: string): Family | null {
+  const t = colour;
+  if (/colourless|colorless/i.test(t) && !/\bwhite\b|\bmilky\b/i.test(t)) return "Clear";
+  if (/\bmilky\b/i.test(t) && /colourless|colorless/i.test(t)) return "White";
+
+  const phrases: [RegExp, Family][] = [
+    [/bluish[-\s]?green|greenish[-\s]?blue/i, "Green"],
+    [/greenish[-\s]?yellow|yellowish[-\s]?green/i, "Yellow"],
+    [/yellowish[-\s]?white/i, "White"],
+    [/bluish[-\s]?white/i, "Grey"],
+    [/silvery[-\s]?white/i, "Grey"],
+    [/reddish[-\s]?brown|yellowish[-\s]?brown/i, "Brown"],
+  ];
+  for (const [re, fam] of phrases) {
+    if (re.test(t)) return fam;
+  }
+
+  const words: [RegExp, Family][] = [
+    [/\bpink\b/i, "Pink"],
+    [/\bpurple\b|\bviolet\b/i, "Purple"],
+    [/\borange\b/i, "Orange"],
+    [/\bbrown\b/i, "Brown"],
+    [/\bblack\b/i, "Black"],
+    [/\bgrey\b|\bgray\b/i, "Grey"],
+    [/\bgreen\b/i, "Green"],
+    [/\byellow\b/i, "Yellow"],
+    [/\bred\b/i, "Red"],
+    [/\bblue\b/i, "Blue"],
+    [/\bwhite\b|\bmilky\b/i, "White"],
+  ];
+  let best: { idx: number; fam: Family } | null = null;
+  for (const [re, fam] of words) {
+    const m = re.exec(t);
+    if (!m) continue;
+    if (!best || m.index < best.idx) best = { idx: m.index, fam };
+  }
+  return best?.fam ?? null;
+}
+
+function familyFromSwatch(swatch: string): Family {
+  const { h, s, l } = hexToHsl(swatch);
+  // #f8fafc and similar "white" hexes are slightly blue-tinted (high L, moderate S, hue ~210).
+  // Treat washed-out near-white as White, not Blue.
+  if (l >= 0.9 || (l >= 0.82 && s < 0.5)) return "White";
   if (s < 0.14) {
     if (l >= 0.82) return "White";
     if (l <= 0.22) return "Black";
@@ -74,6 +115,10 @@ function familyOf(row: ColourRow): Family {
   if (h < 258) return "Blue";
   if (h < 300) return "Purple";
   return "Pink";
+}
+
+function familyOf(row: ColourRow): Family {
+  return familyFromText(row.colour) ?? familyFromSwatch(row.swatch);
 }
 
 function luminance(hex: string): number {
